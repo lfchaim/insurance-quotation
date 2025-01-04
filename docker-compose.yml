@@ -26,3 +26,16 @@ services:
       depends_on:
         - mongo
       restart: always
+
+  mockServer:
+      image: mockserver/mockserver:mockserver-snapshot
+      ports:
+        - 1080:1080
+      environment:
+        MOCKSERVER_PROPERTY_FILE: /config/config/mock-server.properties
+        MOCKSERVER_INITIALIZATION_JSON_PATH: /config/config/initializerJson.json
+      volumes:
+        - type: bind
+          source: .
+          target: /config
+

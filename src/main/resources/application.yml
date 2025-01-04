@@ -1,0 +1,16 @@
+server:
+  port: 8080
+
+logging:
+  level:
+    com.lfchaim.insurance.quotation: info
+
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      authentication-database: admin
+      database: example
+      username: dbuser
+      password: userpass

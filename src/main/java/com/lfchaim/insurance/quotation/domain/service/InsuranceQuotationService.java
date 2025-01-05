@@ -1,10 +1,19 @@
 package com.lfchaim.insurance.quotation.domain.service;
 
+import java.util.Optional;
+
+import org.springframework.http.HttpStatus;
+
 import com.lfchaim.insurance.quotation.application.ports.input.CreateInsuranceQuotationUseCase;
 import com.lfchaim.insurance.quotation.application.ports.input.GetInsuranceQuotationUseCase;
 import com.lfchaim.insurance.quotation.application.ports.output.InsuranceQuotationOutputPort;
+import com.lfchaim.insurance.quotation.application.ports.output.ProductOutputPort;
 import com.lfchaim.insurance.quotation.domain.exception.InsuranceQuotationNotFoundException;
 import com.lfchaim.insurance.quotation.domain.model.InsuranceQuotation;
+import com.lfchaim.insurance.quotation.domain.model.Product;
+import com.lfchaim.insurance.quotation.infrastructure.adapters.input.rest.util.ErrorCode;
+import com.lfchaim.insurance.quotation.infrastructure.adapters.input.rest.util.ErrorInfo;
+import com.lfchaim.insurance.quotation.infrastructure.adapters.input.rest.util.Responder;
 
 import lombok.AllArgsConstructor;
 
@@ -13,17 +22,31 @@ public class InsuranceQuotationService implements CreateInsuranceQuotationUseCas
 
     private final InsuranceQuotationOutputPort insuranceQuotationOutputPort;
     
+    private final ProductOutputPort productOutputPort;
+    
     @Override
     public InsuranceQuotation getById(String id) {
-        System.out.println("Retornando InsuranceQuotationo por ID");
         return insuranceQuotationOutputPort.getById(id)
         		.orElseThrow(() -> new InsuranceQuotationNotFoundException("Insurance Quotation not found ID: " + id));
     }
 
     @Override
-    public InsuranceQuotation create(InsuranceQuotation model) {
-        System.out.println("Creating InsuranceQuotation");
-        return insuranceQuotationOutputPort.save(model);
+    public Responder create(InsuranceQuotation model) {
+    	Responder responder = null;
+    	Optional<Product> product = productOutputPort.getProductById(model.getProduct_id());
+    	if( product == null != !product.get().getId().equals(model.getProduct_id()) ) {
+    		ErrorInfo errorInfo = new ErrorInfo(ErrorCode.UNPROCESSABLE_ENTITY,"Product not found",null);
+    		responder = new Responder(null,null,errorInfo);
+    	} else {
+	    	InsuranceQuotation insuranceQuotation = insuranceQuotationOutputPort.save(model);
+	    	if( insuranceQuotation != null ) {
+	    		responder = new Responder(HttpStatus.CREATED, insuranceQuotation, null); 
+	    	} else {
+	    		ErrorInfo errorInfo = new ErrorInfo(ErrorCode.UNPROCESSABLE_ENTITY,"Cannot create Insurance Quotation",null);
+	    		responder = new Responder(null,null,errorInfo);
+	    	}
+    	}
+        return responder;
     }
     
 }

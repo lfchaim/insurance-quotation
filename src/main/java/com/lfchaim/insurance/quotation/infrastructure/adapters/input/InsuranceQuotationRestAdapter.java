@@ -15,6 +15,7 @@ import com.lfchaim.insurance.quotation.application.ports.input.GetInsuranceQuota
 import com.lfchaim.insurance.quotation.domain.model.InsuranceQuotation;
 import com.lfchaim.insurance.quotation.infrastructure.adapters.input.rest.data.request.InsuranceQuotationRequest;
 import com.lfchaim.insurance.quotation.infrastructure.adapters.input.rest.data.response.InsuranceQuotationResponse;
+import com.lfchaim.insurance.quotation.infrastructure.adapters.input.rest.util.Responder;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,20 +29,20 @@ public class InsuranceQuotationRestAdapter {
     private final GetInsuranceQuotationUseCase getInsuranceQuotationUseCase;
 
     private final ModelMapper mapper;
-
+    
     @PostMapping(value = "/insurance-quotations")
     public ResponseEntity<InsuranceQuotationResponse> createInsuranceQuotation(@RequestBody InsuranceQuotationRequest insuranceQuotationToCreate){
-        // Request to domain
+        Responder responder = null;
         InsuranceQuotation insuranceQuotation = mapper.map(insuranceQuotationToCreate, InsuranceQuotation.class);
-        insuranceQuotation = createInsuranceQuotationUseCase.create(insuranceQuotation);
-        // Domain to response
-        return new ResponseEntity<>(mapper.map(insuranceQuotation, InsuranceQuotationResponse.class), HttpStatus.CREATED);
+        //insuranceQuotation = createInsuranceQuotationUseCase.create(insuranceQuotation);
+        //return new ResponseEntity<>(mapper.map(insuranceQuotation, InsuranceQuotationResponse.class), HttpStatus.CREATED);
+        responder = createInsuranceQuotationUseCase.create(insuranceQuotation);
+        return (ResponseEntity<InsuranceQuotationResponse>) responder.getResponse();
     }
 
     @GetMapping(value = "/insurance-quotations/{id}")
     public ResponseEntity<InsuranceQuotationResponse> getInsuranceQuotation(@PathVariable String id){
         InsuranceQuotation insuranceQuotation = getInsuranceQuotationUseCase.getById(id);
-        // Domain to response
         return new ResponseEntity<>(mapper.map(insuranceQuotation, InsuranceQuotationResponse.class), HttpStatus.OK);
     }
     

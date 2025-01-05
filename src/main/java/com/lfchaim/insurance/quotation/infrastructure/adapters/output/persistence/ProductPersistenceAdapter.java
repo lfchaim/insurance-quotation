@@ -2,37 +2,37 @@ package com.lfchaim.insurance.quotation.infrastructure.adapters.output.persisten
 
 import java.util.Optional;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lfchaim.insurance.quotation.application.ports.output.ProductOutputPort;
 import com.lfchaim.insurance.quotation.domain.model.Product;
-import com.lfchaim.insurance.quotation.infrastructure.adapters.output.persistence.entity.ProductEntity;
-import com.lfchaim.insurance.quotation.infrastructure.adapters.output.persistence.mapper.ProductMapper;
-import com.lfchaim.insurance.quotation.infrastructure.adapters.output.persistence.repository.ProductRepository;
 
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
+import io.restassured.response.ResponseBody;
+import io.restassured.specification.RequestSpecification;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class ProductPersistenceAdapter implements ProductOutputPort {
 
-    private final ProductRepository productRepository;
-
-    private final ProductMapper productMapper;
-    
-    @Override
-    public Product saveProduct(Product product) {
-        ProductEntity productEntity = productMapper.toEntity(product);
-        productRepository.save(productEntity);
-        return productMapper.toProduct(productEntity);
-    }
-
     @Override
     public Optional<Product> getProductById(String id) {
-        Optional<ProductEntity> productEntity = productRepository.findById(id);
-
-        if(productEntity.isEmpty()) {
-            return Optional.empty();
-        }
-
-        Product product = productMapper.toProduct(productEntity.get());
+    	Product product = null;
+    	try {
+	    	RestAssured.baseURI = "http://localhost:1080";
+	    	RequestSpecification httpRequest = RestAssured.given();
+	    	Response response = httpRequest.get("/products");
+	
+	    	ResponseBody body = response.getBody();
+	    	
+	    	String sBody = body.asString();
+	    	
+	    	ObjectMapper objectMapper = new ObjectMapper();
+	    	product = objectMapper.readValue(sBody, Product.class);
+    	}catch( JsonProcessingException e ) {
+    		e.printStackTrace();
+    	}
         return Optional.of(product);
     }
     

@@ -6,8 +6,6 @@ import com.lfchaim.insurance.quotation.domain.model.Product;
 
 public interface ProductOutputPort {
     
-    Product saveProduct(Product product);
-    
     Optional<Product> getProductById(String id);
     
 }

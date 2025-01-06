@@ -18,7 +18,7 @@ Para fins acadêmicos e de aprendizado, esta solução utiliza Arquitetura Hexag
 
 É claro que pensando em DDD, podemos isolar os micro-serviços que se integram com componentes externos. Daí então, seria viável criar micro-serviço para integrar com os componentes Insurance Policy e Insurance Product e o micro-serviço Core atuaria como orquestrador (Microservices Orchestration Pattern).  
 
-![Component Diagram](./doc/Insurance Quotation.drawio.png "C4 Component Model")
+<img src="./doc/Insurance Quotation.drawio.png" alt="Component Diagram - C4 Model"/>  
 
 ## Docker Compose
 Estando no diretório do projeto executar (Linux):  

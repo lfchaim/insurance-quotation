@@ -38,9 +38,9 @@ services:
         - type: bind
           source: .
           target: /config
-  app:
-    build: .
-    ports:
-      - "8080:8080"
-    depends_on:
-      - mongo
+#  app:
+#    build: .
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - mongo

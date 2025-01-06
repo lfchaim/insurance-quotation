@@ -14,3 +14,4 @@ spring:
       database: example
       username: dbuser
       password: userpass
+      auto-index-creation: true

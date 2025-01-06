@@ -1,0 +1,97 @@
+{
+	"info": {
+		"_postman_id": "600b0401-4d1a-4dd9-b583-0f2a72ae801d",
+		"name": "insurance-quotation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2660682"
+	},
+	"item": [
+		{
+			"name": "POST OK",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"product_id\": \"1b2da7cc-b367-4196-8a78-9cfeec21f587\",\n    \"offer_id\": \"adc56d77-348c-4bf0-908f-22d402ee715c\",\n    \"category\": \"HOME\",\n    \"total_monthly_premium_amount\": 75.25,\n    \"total_coverage_amount\": 825000.00,\n    \"coverages\": {\n        \"Incêndio\": 250000.00,\n        \"Desastres naturais\": 500000.00,\n        \"Responsabiliadade civil\": 75000.00\n    },\n    \"assistances\": [\n        \"Encanador\",\n        \"Eletricista\",\n        \"Chaveiro 24h\"\n    ],\n    \"customer\": {\n        \"document_number\": \"36205578900\",\n        \"name\": \"John Wick\",\n        \"type\": \"NATURAL\",\n        \"gender\": \"MALE\",\n        \"date_of_birth\": \"1973-05-02\",\n        \"email\": \"johnwick@gmail.com\",\n        \"phone_number\": 11950503030\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/insurance-quotations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"insurance-quotations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Product Error",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"product_id\": \"1b2da7cc-b367-4196-8a78-9cfeec21f588\",\n    \"offer_id\": \"adc56d77-348c-4bf0-908f-22d402ee715c\",\n    \"category\": \"HOME\",\n    \"total_monthly_premium_amount\": 75.25,\n    \"total_coverage_amount\": 825000.00,\n    \"coverages\": {\n        \"Incêndio\": 250000.00,\n        \"Desastres naturais\": 500000.00,\n        \"Responsabiliadade civil\": 75000.00\n    },\n    \"assistances\": [\n        \"Encanador\",\n        \"Eletricista\",\n        \"Chaveiro 24h\"\n    ],\n    \"customer\": {\n        \"document_number\": \"36205578900\",\n        \"name\": \"John Wick\",\n        \"type\": \"NATURAL\",\n        \"gender\": \"MALE\",\n        \"date_of_birth\": \"1973-05-02\",\n        \"email\": \"johnwick@gmail.com\",\n        \"phone_number\": 11950503030\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/insurance-quotations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"insurance-quotations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Policy Error",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"product_id\": \"1b2da7cc-b367-4196-8a78-9cfeec21f587\",\n    \"offer_id\": \"adc56d77-348c-4bf0-908f-22d402ee715d\",\n    \"category\": \"HOME\",\n    \"total_monthly_premium_amount\": 75.25,\n    \"total_coverage_amount\": 825000.00,\n    \"coverages\": {\n        \"Incêndio\": 250000.00,\n        \"Desastres naturais\": 500000.00,\n        \"Responsabiliadade civil\": 75000.00\n    },\n    \"assistances\": [\n        \"Encanador\",\n        \"Eletricista\",\n        \"Chaveiro 24h\"\n    ],\n    \"customer\": {\n        \"document_number\": \"36205578900\",\n        \"name\": \"John Wick\",\n        \"type\": \"NATURAL\",\n        \"gender\": \"MALE\",\n        \"date_of_birth\": \"1973-05-02\",\n        \"email\": \"johnwick@gmail.com\",\n        \"phone_number\": 11950503030\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/insurance-quotations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"insurance-quotations"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

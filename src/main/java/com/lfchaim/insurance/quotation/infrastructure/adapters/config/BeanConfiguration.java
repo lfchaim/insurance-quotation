@@ -7,14 +7,12 @@ import org.springframework.context.annotation.Configuration;
 import com.lfchaim.insurance.quotation.domain.service.InsuranceQuotationService;
 import com.lfchaim.insurance.quotation.domain.service.ProductService;
 import com.lfchaim.insurance.quotation.infrastructure.adapters.input.rest.util.Responder;
+import com.lfchaim.insurance.quotation.infrastructure.adapters.output.persistence.InsurancePolicyPersistenceAdapter;
 import com.lfchaim.insurance.quotation.infrastructure.adapters.output.persistence.InsuranceQuotationPersistenceAdapter;
 import com.lfchaim.insurance.quotation.infrastructure.adapters.output.persistence.ProductPersistenceAdapter;
 import com.lfchaim.insurance.quotation.infrastructure.adapters.output.persistence.mapper.InsuranceQuotationMapper;
 import com.lfchaim.insurance.quotation.infrastructure.adapters.output.persistence.repository.InsuranceQuotationRepository;
 
-/**
- * Configuracion BEANS
- */
 @Configuration
 public class BeanConfiguration {
     
@@ -28,6 +26,11 @@ public class BeanConfiguration {
         return new ProductPersistenceAdapter();
     }
 
+    @Bean
+    public InsurancePolicyPersistenceAdapter insurancePolicyPersistenceAdapter() {
+        return new InsurancePolicyPersistenceAdapter();
+    }
+    
     @Bean
     public ProductService productService(ProductPersistenceAdapter productPersistenceAdapter) {
         return new ProductService(productPersistenceAdapter);
@@ -44,8 +47,8 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public InsuranceQuotationService insuranceQuotationService(InsuranceQuotationPersistenceAdapter insuranceQuotationPersistenceAdapter, ProductPersistenceAdapter productPersistenceAdapter) {
-        return new InsuranceQuotationService(insuranceQuotationPersistenceAdapter, productPersistenceAdapter);
+    public InsuranceQuotationService insuranceQuotationService(InsuranceQuotationPersistenceAdapter insuranceQuotationPersistenceAdapter, ProductPersistenceAdapter productPersistenceAdapter, InsurancePolicyPersistenceAdapter insurancePolicyPersistenceAdapter) {
+        return new InsuranceQuotationService(insuranceQuotationPersistenceAdapter, productPersistenceAdapter, insurancePolicyPersistenceAdapter);
     }
 
     @Bean
